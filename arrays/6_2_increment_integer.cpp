@@ -2,8 +2,8 @@
 #include <vector>
 
 /*
-Purpose: Increment an arbitrary precision integer represented in a vector. 
-For example 145 is represented as <1, 4, 5> and the incremented solution should be <1, 4, 6>
+Purpose: Increment an arbitrary precision integer represented in a vector by d. 
+For example 145 is represented as <1, 4, 5> and the incremented solution should be <1, 4, 6> if d = 1
 */
 
 void printArray(const std::vector<int>& ar)
