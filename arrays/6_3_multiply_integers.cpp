@@ -6,6 +6,14 @@ Purpose: Multiply two positive integers represented as vectors.
 Example: <1, 1> and <1, 1> should result to <1, 2, 1> 
 */
 
+/*
+The most important thing to notice is that:
+1) To calculate result_rev[2], we need 
+                {<num1_rev[0],num1_rev[2]>, 
+                 <num1_rev[1],num1_rev[1]> and 
+                 <num1_rev[2],num1_rev[0]>}  
+*/
+
 void printArray(const std::vector<int>& ar)
 {
 	for(std::vector<int>::const_iterator iter = ar.begin();
