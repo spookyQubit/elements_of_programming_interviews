@@ -5,6 +5,15 @@
 Purpose:
 An array is given with v[i] denoting the max num of forward steps one can take from location i.
 The objective is to find whether one can reach the end.  
+My solution: ( ex ar = <3, 3, 1, 0, 2, 0, 1> )
+     1) Find the indexes of zeror. <3, 5> 
+     2) Find the ranges between zeros <(0,3), (3, 5)>
+     3) Check if one can skip 3 by looking at indexes between <0, 3> and 
+        check if one can skip 5 by looking at indexes between <3, 5>
+     4) if one can skip, both, one can reach the end.
+
+ EPI Solution: 
+
 */
 
 
@@ -85,12 +94,40 @@ bool isEndReachable(const std::vector<unsigned int>& ar)
 }
 
 
+
+bool isEndReachableEPI(const std::vector<unsigned int>& ar)
+{
+	unsigned int maxIndexReachableTillNow = 0;
+
+    for(unsigned int i = 0; i < ar.size(); ++i)
+    {
+    	if( (i + ar[i]) > maxIndexReachableTillNow )
+    	{
+    		maxIndexReachableTillNow = i + ar[i];
+    	}
+        
+        std::cout << "maxIndexReachableTillNow = " 
+                  << maxIndexReachableTillNow
+                  << std::endl;
+
+    	if(maxIndexReachableTillNow >= ar.size())
+    	{
+    		return true;
+    	}
+    }
+
+    return false;
+}
+
 int main()
 {
 	std::vector<unsigned int> ar = {3, 3, 1, 0, 2, 0, 1};
     //std::vector<unsigned int> ar = {3, 2, 0, 0, 2, 0, 1};
 
     bool result = isEndReachable(ar);	
-
     std::cout << "result = " << result << std::endl;
+
+    result = isEndReachableEPI(ar); // EPI solution
+    std::cout << "result = " << result << std::endl;    
+    
 }
