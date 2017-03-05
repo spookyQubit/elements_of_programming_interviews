@@ -40,6 +40,8 @@ void getRangesBetweenZeros(std::vector<std::pair<unsigned int, unsigned int> >* 
 	{
 		std::pair<unsigned int, unsigned int> p = std::make_pair(firstZeroIdx, zeroIdxs[i]);
         pt_rangesBetweenZeros->push_back(p); 
+
+        firstZeroIdx = zeroIdxs[i];
 	}
 }
 
@@ -85,8 +87,8 @@ bool isEndReachable(const std::vector<unsigned int>& ar)
 
 int main()
 {
-	//std::vector<unsigned int> ar = {3, 3, 1, 0, 2, 0, 1};
-    std::vector<unsigned int> ar = {3, 2, 0, 0, 2, 0, 1};
+	std::vector<unsigned int> ar = {3, 3, 1, 0, 2, 0, 1};
+    //std::vector<unsigned int> ar = {3, 2, 0, 0, 2, 0, 1};
 
     bool result = isEndReachable(ar);	
 
