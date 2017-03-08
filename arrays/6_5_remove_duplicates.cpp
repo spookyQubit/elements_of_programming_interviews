@@ -30,7 +30,6 @@ int removeDuplicates(std::vector<int>* pt_ar)
     	}
     	else{
     		ar[id_to_insert] = ar[current_id];
-    		//std::swap(ar[id_to_insert], ar[current_id]);
     		++id_to_insert;
     		++current_id;
     	}
@@ -41,7 +40,8 @@ int removeDuplicates(std::vector<int>* pt_ar)
 
 int main()
 {
-	std::vector<int> ar = {2, 3, 5, 5, 7, 11, 11, 11, 13};
+	//std::vector<int> ar = {2, 3, 5, 5, 7, 11, 11, 11, 13};
+    std::vector<int> ar = {11, 11, 11, 11};
         
     printArray(ar);
     int uniqueElements = removeDuplicates(&ar);	
