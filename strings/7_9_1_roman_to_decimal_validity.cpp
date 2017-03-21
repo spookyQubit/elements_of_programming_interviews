@@ -14,7 +14,7 @@ C -->  100
 D -->  500 
 M --> 1000
 
-1) The letters must be non-decreasing, except:
+1) The letters must be non-increasing, except:
 a) I can come before V and X
 b) X can come before L and C
 c) C and come before D and M
