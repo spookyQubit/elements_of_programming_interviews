@@ -79,28 +79,7 @@ void reverse(shared_ptr<List<T> > pt_l)
 	}
 
 	pt_l->setHead(prev);
-	//pt_l->printList();
 }
-
-template<typename T>
-void reverse(List<T>* pt_l)
-{
-	List<T>& l = *pt_l;
-
-	shared_ptr<Node<T> > prev = NULL;
-	shared_ptr<Node<T> > current = pt_l->getHead();
-
-	while(current){
-		shared_ptr<Node<T> > temp = current->next;
-		current->next = prev;
-		prev = current;
-		current = temp;
-	}
-
-	pt_l->setHead(prev);
-	pt_l->printList();
-}
-
 
 template<typename T>
 void reverseSublist(shared_ptr<List<T> > pt_l, int s, int f)
@@ -137,6 +116,8 @@ void reverseSublist(shared_ptr<List<T> > pt_l, int s, int f)
 	pre_sublist->next = prev;
 
 }
+
+
 
 
 int main()
