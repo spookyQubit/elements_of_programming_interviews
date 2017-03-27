@@ -93,7 +93,6 @@ shared_ptr<Node<T> > DoubleLinkList<T>::getHead()
 
 
 // MergeList
-
 template<typename T>
 void append(shared_ptr<Node<T> >* h,  shared_ptr<Node<T> >* tail)
 {
