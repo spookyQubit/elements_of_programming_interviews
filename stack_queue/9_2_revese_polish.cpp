@@ -89,6 +89,5 @@ int evalute_rpn(const vector<string>& exp)
 int main()
 {
 	vector<string> exp = {"1", "2", "*", "3", "+"};
-	//string exp = "1,2,*";
 	cout << "evalute_rpn(exp) = " << evalute_rpn(exp) << endl;
 }
