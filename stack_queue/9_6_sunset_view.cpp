@@ -42,7 +42,7 @@ int main()
 
 	for(int i=0; i<indexes.size(); ++i)
 	{
-		cout << i << " ";
+		cout << indexes[i] << " ";
 	}
 	cout << endl;
 }
