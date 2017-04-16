@@ -86,7 +86,7 @@ int CircularQueue::dequeue()
 		else{
 			d_head = (d_head + 1) % d_queue.capacity();
 		}
-		return d_head;
+		return temp;
 	}
 
 	// The queue is empty
@@ -128,10 +128,5 @@ int main()
 	cout << q.dequeue() << endl;
 	cout << q.dequeue() << endl;
 	cout << q.dequeue() << endl;
-	cout << q.dequeue() << endl;
-
-
-
-
-
+	cout << q.dequeue() << endl;=
 }
