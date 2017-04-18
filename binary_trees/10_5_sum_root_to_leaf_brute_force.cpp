@@ -1,5 +1,7 @@
 #include <iostream>
 #include <memory>
+#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -52,11 +54,9 @@ public:
 	BinaryTree();
 	shared_ptr<BinaryTreeNode<T> >& get_root();
 	void inorder() const;
-	int get_sum_of_paths() const;
 private:
 	shared_ptr<BinaryTreeNode<T> > d_root;
 	void inorder_helper(const shared_ptr<BinaryTreeNode<T> >& node) const; 
-	int get_sum_of_paths_helper(const shared_ptr<BinaryTreeNode<T> >& node, int sum_till_now) const;
 };
 
 template <typename T>
@@ -89,31 +89,27 @@ void BinaryTree<T>::inorder() const
 	this->inorder_helper(d_root);
 }
 
-
-
 template <typename T>
-int BinaryTree<T>::get_sum_of_paths_helper(const shared_ptr<BinaryTreeNode<T> >& node, int sum_till_now) const
+void get_leaves_and_child_parents(shared_ptr<BinaryTreeNode<T> > node, 
+	                              vector<shared_ptr<BinaryTreeNode<int> > > *pt_leaves, 
+	                              map<shared_ptr<BinaryTreeNode<int> >, shared_ptr<BinaryTreeNode<int> > > *pt_c_p)
 {
 	if(!node){
-		return 0;
+		return;
 	}
 
-	sum_till_now = 2 * sum_till_now + node->data;
-
+	get_leaves_and_child_parents(node->left, pt_leaves, pt_c_p);
 	if(!node->left && !node->right){
-		return sum_till_now;
+		// This is a leaf
+		pt_leaves->emplace_back(node);
 	}
-
-	return (this->get_sum_of_paths_helper(node->left, sum_till_now) + 
-		    this->get_sum_of_paths_helper(node->right, sum_till_now));
-}
-
-
-
-template <typename T>
-int BinaryTree<T>::get_sum_of_paths() const
-{
-	return this->get_sum_of_paths_helper(d_root, 0);
+	if(!node->left){
+		pt_c_p->emplace(node->left, node);
+	}
+	if(!node->right){
+		pt_c_p->emplace(node->right, node);
+	}
+	get_leaves_and_child_parents(node->right, pt_leaves, pt_c_p);
 }
 
 void test1()
@@ -123,29 +119,31 @@ void test1()
 
 	/*
 	Construct a binary tree:
-	            1  <-- Most significant
-	           / \
-	          0   1
-	         / \
-	        1   0
-	Inorder: 1 0 0 1 1
-	sum = (101) + (100) + (11)
-	    = (5)   + (4)   + (3)
-	    = 12  
+	           10
+	          /  \
+	         /    \
+	        25    20
+	       / \    / \  
+	      6   5  7   1  
+	Inorder: 6 25 5 10 7 20 1
+	common_ancestor(6, 5) --> 25
+	common_ancestor(20, 1) --> 20 
 	*/
-	root = make_shared<BinaryTreeNode<int> >(1);
-	root->left = make_shared<BinaryTreeNode<int> >(0);;
-	root->right = make_shared<BinaryTreeNode<int> >(1);
-	root->left->left = make_shared<BinaryTreeNode<int> >(1);
-	root->left->right = make_shared<BinaryTreeNode<int> >(0);
+
+	root = make_shared<BinaryTreeNode<int> >(10);
+	root->left = make_shared<BinaryTreeNode<int> >(25);
+	root->right = make_shared<BinaryTreeNode<int> >(20);
+	root->left->right = make_shared<BinaryTreeNode<int> >(5);
+	root->left->left = make_shared<BinaryTreeNode<int> >(6);
+	root->right->left = make_shared<BinaryTreeNode<int> >(7);
+	root->right->right = make_shared<BinaryTreeNode<int> >(1);
 
 	t.inorder();
 
-
-	// Sum of paths 
-	int sum_of_paths = t.get_sum_of_paths();
-
-	cout << "sum_of_paths = " << sum_of_paths << endl;
+	// Get all leaves and the map containing the child: parent mapping
+	vector<shared_ptr<BinaryTreeNode<int> > > leaves;
+	map<shared_ptr<BinaryTreeNode<int> >, shared_ptr<BinaryTreeNode<int> > > child_parent;
+	get_leaves_and_child_parents<int>(root, &leaves, &child_parent);
 }
 
 
