@@ -103,10 +103,10 @@ void get_leaves_and_child_parents(shared_ptr<BinaryTreeNode<T> > node,
 		// This is a leaf
 		pt_leaves->emplace_back(node);
 	}
-	if(!node->left){
+	if(node->left){
 		pt_c_p->emplace(node->left, node);
 	}
-	if(!node->right){
+	if(node->right){
 		pt_c_p->emplace(node->right, node);
 	}
 	get_leaves_and_child_parents(node->right, pt_leaves, pt_c_p);
@@ -152,8 +152,8 @@ void test1()
 
 	for(auto iter=child_parent.begin(); iter != child_parent.end(); ++iter)
 	{
-		cout << "iter->first->data = " << iter->first->data 
-             << "iter->second->data = " << iter->second->data
+		cout << "child = " << iter->first->data 
+             << " parent = " << iter->second->data
 		     << endl;
 	}
 }
