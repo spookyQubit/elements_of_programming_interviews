@@ -144,6 +144,18 @@ void test1()
 	vector<shared_ptr<BinaryTreeNode<int> > > leaves;
 	map<shared_ptr<BinaryTreeNode<int> >, shared_ptr<BinaryTreeNode<int> > > child_parent;
 	get_leaves_and_child_parents<int>(root, &leaves, &child_parent);
+
+	for(int i=0; i<leaves.size(); ++i)
+	{
+		cout << "data = " << leaves[i]->data << endl;
+	}
+
+	for(auto iter=child_parent.begin(); iter != child_parent.end(); ++iter)
+	{
+		cout << "iter->first->data = " << iter->first->data 
+             << "iter->second->data = " << iter->second->data
+		     << endl;
+	}
 }
 
 
