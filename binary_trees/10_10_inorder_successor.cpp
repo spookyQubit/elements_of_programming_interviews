@@ -91,6 +91,7 @@ shared_ptr<BinaryTreeNode<T> > get_inorder_successor(shared_ptr<BinaryTreeNode<T
 
 	// Case 1
 	if(node->right){
+		node = node->right;
 		while(node->left){
 			node = node->left;
 		}
@@ -102,9 +103,10 @@ shared_ptr<BinaryTreeNode<T> > get_inorder_successor(shared_ptr<BinaryTreeNode<T
 	while(node){
 		shared_ptr<BinaryTreeNode<T> > parent = node->parent;
 		if(parent->left == node){
-			cout << "Successor = " << node->data << endl;
-		    return node;
+			cout << "Successor = " << parent->data << endl;
+		    return parent;
 		}
+		node = parent;
 	}
 
 	cout << "No successor" << endl;
@@ -162,7 +164,12 @@ void test1()
 
 	t.inorder();
 
-	get_inorder_successor(root);
+	shared_ptr<BinaryTreeNode<int> > successor = get_inorder_successor(root->left->right);
+
+	if(successor){
+		cout << successor->data << endl;
+	}
+	
 
 }
 

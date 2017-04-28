@@ -4,7 +4,7 @@
 
 using namespace std;
 /*
-Purpose: Given a binary tree and a node in it, find the inorder traversal in constant space. 
+Purpose: Given a binary tree and a node in it, find the successor to it when doing preorder traversal. 
 */
 
 template <typename T>
@@ -77,62 +77,56 @@ void BinaryTree<T>::inorder() const
 }
 
 template <typename T>
-shared_ptr<BinaryTreeNode<T> > get_inorder_successor(shared_ptr<BinaryTreeNode<T> > node)
+shared_ptr<BinaryTreeNode<T> > get_preorder_successor(shared_ptr<BinaryTreeNode<T> > node)
 {
 	if(!node){
 		return NULL;
 	}
 
 	// There are two cases to consider:
-	// 1) The node has a right child. 
-	//    * Find the left most child of the right child. This is the successor.
-	// 2) The node does not have a right child
-	//    * Find the first ancestor for which the child is the left child
+	// 1) The node has a left child. 
+	//    * This is the successor.
+	// 2) The node does not have a left child and has a right child
+	//    * The right child is the successor
+	// 3) Keep looking at the parent. 
+	//    If the parent has a right child, that is not the node itself, the right child is the successor. 
+	
+	cout << "node->data  = " << node->data << endl;
 
 	// Case 1
-	if(node->right){
-		node = node->right;
-		while(node->left){
-			node = node->left;
-		}
-		//cout << "Successor = " << node->data << endl;
-		return node;
+	if(node->left){
+		return node->left;
 	}
 
 	// Case 2
+	if(node->right){
+		return node->right;
+	}
+
+	// Case 3
+	cout << "case 3" << endl;
 	while(node){
 		shared_ptr<BinaryTreeNode<T> > parent = node->parent;
 		if(!parent){
 			return NULL;
 		}
 
-		if(parent->left == node){
-			//cout << "Successor = " << parent->data << endl;
-		    return parent;
+		cout << "parent->data = " << parent->data << endl;
+
+		if(parent->right != node){
+			if(parent->right){
+				return parent->right;
+			}
 		}
+
 		node = parent;
 	}
 
+	
 	cout << "No successor" << endl;
 	return NULL;
 }
 
-
-template<typename T>
-void inorder_constant_space(shared_ptr<BinaryTreeNode<T> > node)
-{
-	shared_ptr<BinaryTreeNode<T> > successor = NULL;
-
-	while(node->left){
-		node = node->left;
-	}
-
-	successor = node;
-	while(successor){
-		cout << ":: successor = " << successor->data << endl;
-		successor = get_inorder_successor<T>(successor);
-	}
-}
 
 
 void test1()
@@ -153,6 +147,7 @@ void test1()
 	                  /
 	                 2 
 	Inorder: 6 25 5 10 7 20 1 2 6
+	Preorder: 10 25 6 5 20 7 1 6 2
 	*/
 
 	root = make_shared<BinaryTreeNode<int> >(10);
@@ -185,7 +180,11 @@ void test1()
 
 	t.inorder();
 
-	inorder_constant_space<int>(root);
+	shared_ptr<BinaryTreeNode<int> > preorder_successor = get_preorder_successor<int>(root->right->right->right->left);
+	if(preorder_successor){
+		cout << "preorder_successor = " << preorder_successor->data << endl;
+
+	}
 }
 
 int main()
