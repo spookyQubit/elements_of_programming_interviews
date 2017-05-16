@@ -11,7 +11,6 @@ Purpose: Given a sorted array A, find all indices i, such that A[i] = i.
 
 void get_indices_equals_value_helper(vector<int> *pt_result, const vector<int>& v, int l, int r)
 {
-	// The following is a O(n) method, which does not use the fact that the array is sorted!
 	if(l > r  || 
 		l < 0 || 
 		r >= v.size()){
