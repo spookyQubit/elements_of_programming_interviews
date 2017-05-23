@@ -109,9 +109,6 @@ void test1()
 	lru_cache.insert(14);
 
 	lru_cache.del(12);
-	
-	
-
 	lru_cache.print();
 
 }
